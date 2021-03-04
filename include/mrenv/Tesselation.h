@@ -32,7 +32,7 @@ namespace mrenv
                 std::shared_ptr<Rectangle> rectA,
                 std::shared_ptr<Rectangle> rectB)
             {
-                return area(*rectA) > area(*rectB);
+                return area(*rectA) < area(*rectB);
             }
         };
 
@@ -72,6 +72,8 @@ namespace mrenv
 
         void plotBestCover();
         void setFootprint(int Lenght, int width);
+
+        void doubleImage();
 
     private:
         int length_px, width_px;

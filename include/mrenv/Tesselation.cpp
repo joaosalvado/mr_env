@@ -393,3 +393,16 @@ double mrenv::Tesselation::area(const Rectangle &rect)
                (rect.left_bottom_corner.y - rect.right_upper_corner.y) *
                    (rect.left_bottom_corner.y - rect.right_upper_corner.y);
 }
+
+void mrenv::Tesselation::doubleImage()
+{
+        Mat result1, result2;
+        vconcat(this->color_img, this->color_img, result1);
+        imshow("Display win.dow2", this->color_img);
+        waitKey();
+        resize(result1, result2, Size(this->color_img.cols, this->color_img.rows));
+        imshow("Display win.dow2", result2);
+        waitKey();
+        imwrite("random2.png", result2);
+        waitKey();
+}

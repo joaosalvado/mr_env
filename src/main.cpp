@@ -11,7 +11,7 @@ int main()
         int length = 1000;
         int width = 1000;
 
-        std::string map_file = "random1.png";
+        std::string map_file = "qr.png";
         std::string maps_path = "/home/ohmy/js_ws/github_joao/mrenv/maps/";
 
         mrenv::Tesselation tessel;

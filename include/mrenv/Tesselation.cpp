@@ -396,13 +396,16 @@ double mrenv::Tesselation::area(const Rectangle &rect)
 
 void mrenv::Tesselation::doubleImage()
 {
-        Mat result1, result2;
+        Mat result1, result2, result3;
         vconcat(this->color_img, this->color_img, result1);
-        imshow("Display win.dow2", this->color_img);
-        waitKey();
         resize(result1, result2, Size(this->color_img.cols, this->color_img.rows));
-        imshow("Display win.dow2", result2);
-        waitKey();
-        imwrite("random2.png", result2);
+
+        int top = 2;
+        int bottom = top;
+        int left = 2;
+        int right = left;
+        copyMakeBorder(result2, result3, top, bottom, left, right, BORDER_CONSTANT, 2);
+        imwrite("qr4.png", result2);
+        imwrite("qrb4.png", result3);
         waitKey();
 }

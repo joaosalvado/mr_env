@@ -1,5 +1,11 @@
 # mr_env
 
+Pre-install
+===========
+    
+    Eigen3
+    opencv
+
 Setup/Install IRIS-Distro
 =========================
 

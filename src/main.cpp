@@ -12,7 +12,7 @@ int main()
         int width = 1000;
 
         std::string map_file = "qr.png";
-        std::string maps_path = "/home/ohmy/js_ws/github_joao/mrenv/maps/";
+        std::string maps_path = "/home/ohmy/js_ws/github_repos/mr_env/maps/";
 
         mrenv::Tesselation tessel;
         tessel.setFootprint(length, width);

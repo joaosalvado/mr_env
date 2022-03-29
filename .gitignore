@@ -18,7 +18,8 @@ CMakeUserPresets.json
 ### CMake Patch ###
 # External projects
 *-prefix/
-
+build/
+build/*
 
 
 ### vscode ###
@@ -28,5 +29,9 @@ CMakeUserPresets.json
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+.idea/*
+cmake-build-*
+
+### clion ###
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake

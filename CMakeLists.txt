@@ -14,8 +14,10 @@ include_directories( ${PROJECT_SOURCE_DIR} )
 include_directories( ${CMAKE_SOURCE_DIR} )
 
 
-include_directories(external/iris-distro/include/)
-include_directories(external/iris-distro/lib/)
+include_directories(${CMAKE_SOURCE_DIR}/external/iris-distro/include/)
+include_directories(${CMAKE_SOURCE_DIR}/external/iris-distro/lib/)
+link_directories(${CMAKE_SOURCE_DIR}/external/iris-distro/lib/)
+
 
 add_subdirectory(include/mrenv/)
 add_subdirectory(src/)

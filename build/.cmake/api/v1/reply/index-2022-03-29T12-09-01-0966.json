@@ -34,7 +34,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-7eaebbdc1b0994b597b1.json",
+			"jsonFile" : "cache-v2-840b8caf151af71610cc.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -58,12 +58,16 @@
 					{
 						"kind" : "codemodel",
 						"version" : 2
+					},
+					{
+						"kind" : "toolchains",
+						"version" : 1
 					}
 				],
 				"responses" : 
 				[
 					{
-						"jsonFile" : "cache-v2-7eaebbdc1b0994b597b1.json",
+						"jsonFile" : "cache-v2-840b8caf151af71610cc.json",
 						"kind" : "cache",
 						"version" : 
 						{
@@ -79,6 +83,9 @@
 							"major" : 2,
 							"minor" : 0
 						}
+					},
+					{
+						"error" : "unknown request kind 'toolchains'"
 					}
 				]
 			}

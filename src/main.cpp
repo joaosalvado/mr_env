@@ -12,11 +12,10 @@ int main()
         int width = 1000;
 
         std::string map_file = "qr.png";
-        std::string maps_path = "/home/ohmy/js_ws/github_joao/mrenv/maps/";
+        //std::string maps_path = "../../maps/";
 
         mrenv::Tesselation tessel;
         tessel.setFootprint(length, width);
-        tessel.addPathToScenarios(maps_path);
         tessel.inputScenario(map_file);
         //tessel.addCountours();
         //tessel.computePolyhedra(seed_point.x, seed_point.y);

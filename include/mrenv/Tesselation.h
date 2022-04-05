@@ -49,6 +49,9 @@ namespace mrenv
         virtual ~Tesselation(){};
         void inputScenario(std::string file_name)
         {
+            // Setup maps path
+            addPathToScenarios();
+
             //READ IMAGE
             std::string image_path = samples::findFile(file_name);
 
@@ -63,9 +66,9 @@ namespace mrenv
 
             best_cover_ = nullptr;
         }
-        void addPathToScenarios(std::string maps_folder_path)
+        void addPathToScenarios()
         {
-            samples::addSamplesDataSearchPath(maps_folder_path);
+            samples::addSamplesDataSearchPath("../../maps/");
         }
 
         void coverRectangles();

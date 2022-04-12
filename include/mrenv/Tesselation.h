@@ -5,8 +5,6 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <iostream>
-#include <Eigen/Core>
-#include "iris/iris.h"
 #include <list>
 #include <queue>
 

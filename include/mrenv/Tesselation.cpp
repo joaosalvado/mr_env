@@ -5,84 +5,84 @@ using namespace cv;
 
 void mrenv::Tesselation::computePolyhedra(double seed_x, double seed_y)
 {
-        //TEST IRIS-DISTRO
-        //Problem in 2D
-        iris::IRISProblem problem(2);
-        //Generate bounding box polyhedron
-        Point bottom_corner(0, 0);
-        Point upper_corner(color_img.cols - 1, color_img.rows - 1);
-        Eigen::MatrixXd A(4, 2);
-        A << 1, 0,
-            0, 1,
-            -1, 0,
-            0, -1;
-        Eigen::VectorXd b(4);
-        b << upper_corner.x, upper_corner.y, -bottom_corner.x, -bottom_corner.y;
-        iris::Polyhedron bb(A, b); //Bounding box
-        problem.setBounds(bb);
-        addRectangle(color_img, bottom_corner, upper_corner);
-        //Set seed point
-        problem.setSeedPoint(Eigen::Vector2d(seed_x, seed_y));
+        // //TEST IRIS-DISTRO
+        // //Problem in 2D
+        // iris::IRISProblem problem(2);
+        // //Generate bounding box polyhedron
+        // Point bottom_corner(0, 0);
+        // Point upper_corner(color_img.cols - 1, color_img.rows - 1);
+        // Eigen::MatrixXd A(4, 2);
+        // A << 1, 0,
+        //     0, 1,
+        //     -1, 0,
+        //     0, -1;
+        // Eigen::VectorXd b(4);
+        // b << upper_corner.x, upper_corner.y, -bottom_corner.x, -bottom_corner.y;
+        // iris::Polyhedron bb(A, b); //Bounding box
+        // problem.setBounds(bb);
+        // addRectangle(color_img, bottom_corner, upper_corner);
+        // //Set seed point
+        // problem.setSeedPoint(Eigen::Vector2d(seed_x, seed_y));
 
-        //Add obstacles to iris problem
-        //Note: Use the contours points
-        //      the obstacle is a line
-        int skip = 1;
-        for (std::vector<Point> ring : contours)
-        {
-                if (skip)
-                {
-                        skip = 0;
-                        continue;
-                }
-                for (auto point_id = 0; point_id < ring.size() - 1; point_id++)
-                {
-                        Eigen::MatrixXd obs(2, 2); //two points
-                        obs(0, 0) = ring[point_id].x;
-                        obs(1, 0) = ring[point_id].y;
-                        obs(0, 1) = ring[point_id + 1].x;
-                        obs(1, 1) = ring[point_id + 1].y;
-                        problem.addObstacle(obs);
-                }
+        // //Add obstacles to iris problem
+        // //Note: Use the contours points
+        // //      the obstacle is a line
+        // int skip = 1;
+        // for (std::vector<Point> ring : contours)
+        // {
+        //         if (skip)
+        //         {
+        //                 skip = 0;
+        //                 continue;
+        //         }
+        //         for (auto point_id = 0; point_id < ring.size() - 1; point_id++)
+        //         {
+        //                 Eigen::MatrixXd obs(2, 2); //two points
+        //                 obs(0, 0) = ring[point_id].x;
+        //                 obs(1, 0) = ring[point_id].y;
+        //                 obs(0, 1) = ring[point_id + 1].x;
+        //                 obs(1, 1) = ring[point_id + 1].y;
+        //                 problem.addObstacle(obs);
+        //         }
 
-                //Close the ring
-                Eigen::MatrixXd obs(2, 2); //two points
-                obs(0, 0) = ring[ring.size() - 1].x;
-                obs(1, 0) = ring[ring.size() - 1].y;
-                obs(0, 1) = ring[0].x;
-                obs(1, 1) = ring[0].y;
-                problem.addObstacle(obs);
-        }
+        //         //Close the ring
+        //         Eigen::MatrixXd obs(2, 2); //two points
+        //         obs(0, 0) = ring[ring.size() - 1].x;
+        //         obs(1, 0) = ring[ring.size() - 1].y;
+        //         obs(0, 1) = ring[0].x;
+        //         obs(1, 1) = ring[0].y;
+        //         problem.addObstacle(obs);
+        // }
 
-        //Find maximal elipsoid and polydron that has the seed point
-        iris::IRISOptions options;
-        options.require_containment = true;
-        iris::IRISRegion region = inflate_region(problem, options);
+        // //Find maximal elipsoid and polydron that has the seed point
+        // iris::IRISOptions options;
+        // options.require_containment = true;
+        // iris::IRISRegion region = inflate_region(problem, options);
 
-        //std::cout << "C: " << region.ellipsoid.getC() << std::endl;
-        //std::cout << "d: " << region.ellipsoid.getD() << std::endl;
-        auto points_eig = region.polyhedron.generatorPoints();
-        //points_eig of the polyhedron are not alligned then use convex hull as a trick to align them
-        std::vector<Point> hull;
-        std::vector<Point> contour;
-        for (auto point_id = 0; point_id < points_eig.size(); point_id++)
-        {
-                Eigen::Vector2d point_eig = points_eig[point_id];
-                contour.push_back(Point2d(point_eig(0), point_eig(1)));
-        }
-        //Eigen::Vector2d point_eig = points_eig[0];
-        //contour.push_back(Point2d(point_eig(0), point_eig(1)));
-        convexHull(contour, hull);
-        this->polygons.push_back(hull);
-        //Points of the polyhedron to be plotted
-        Point *points = new Point[points_eig.size()];
-        for (auto point_id = 0; point_id < points_eig.size(); point_id++)
-        {
-                points[point_id] = hull.at(point_id);
-        }
-        const Point *a = {points};
-        addConvexPolygon(color_img, a, points_eig.size());
-        addFilledCircle(color_img, cv::Point2d(seed_x, seed_y));
+        // //std::cout << "C: " << region.ellipsoid.getC() << std::endl;
+        // //std::cout << "d: " << region.ellipsoid.getD() << std::endl;
+        // auto points_eig = region.polyhedron.generatorPoints();
+        // //points_eig of the polyhedron are not alligned then use convex hull as a trick to align them
+        // std::vector<Point> hull;
+        // std::vector<Point> contour;
+        // for (auto point_id = 0; point_id < points_eig.size(); point_id++)
+        // {
+        //         Eigen::Vector2d point_eig = points_eig[point_id];
+        //         contour.push_back(Point2d(point_eig(0), point_eig(1)));
+        // }
+        // //Eigen::Vector2d point_eig = points_eig[0];
+        // //contour.push_back(Point2d(point_eig(0), point_eig(1)));
+        // convexHull(contour, hull);
+        // this->polygons.push_back(hull);
+        // //Points of the polyhedron to be plotted
+        // Point *points = new Point[points_eig.size()];
+        // for (auto point_id = 0; point_id < points_eig.size(); point_id++)
+        // {
+        //         points[point_id] = hull.at(point_id);
+        // }
+        // const Point *a = {points};
+        // addConvexPolygon(color_img, a, points_eig.size());
+        // addFilledCircle(color_img, cv::Point2d(seed_x, seed_y));
 }
 
 void mrenv::Tesselation::addCountours()

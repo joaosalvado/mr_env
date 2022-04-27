@@ -157,7 +157,8 @@ void mrenv::Tesselation::blueRectangle(Mat img, Point corner1, Point corner2)
         cv::rectangle(img,
                       corner1,
                       corner2,
-                      Scalar(30, 210, 100));
+                      Scalar(30, 210, 100),
+                      4);
 }
 
 void mrenv::Tesselation::addConvexPolygon(Mat img, const Point *points, int n_pts)
@@ -305,7 +306,7 @@ std::shared_ptr<mrenv::Tesselation::Rectangle> mrenv::Tesselation::maxRectangle(
 
 void mrenv::Tesselation::coverRectangles()
 {
-        int T = 200;
+        int T = 100; // 200
         std::random_device rd;                                            // obtain a random number from hardware
         std::mt19937 gen(rd());                                           // seed the generator
         std::uniform_int_distribution<int> distr_x(0, gray_img.cols - 1); // define the range
@@ -320,7 +321,7 @@ void mrenv::Tesselation::coverRectangles()
                 //Create a cover
                 //cover curr_cover;
 
-                for (int n = 0; n < 100; ++n)
+                for (int n = 0; n < 50; ++n) // 100
                 {
                         auto rect = maxRectangle(distr_x(gen), distr_y(gen));
                         if (rect != nullptr)

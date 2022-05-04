@@ -56,7 +56,8 @@ void mrenv::Tesselation::blueRectangle(Mat img, Point corner1, Point corner2)
         cv::rectangle(img,
                       corner1,
                       corner2,
-                      Scalar(30, 210, 100));
+                      Scalar(30, 210, 100),
+                      4);
 }
 
 void mrenv::Tesselation::addConvexPolygon(Mat img, const Point *points, int n_pts)

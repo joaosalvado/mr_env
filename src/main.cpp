@@ -23,7 +23,8 @@ int main()
         tessel.coverRectangles();
         tessel.plotBestCover();
 
+        auto rects  = tessel.getRectangles();
 
-        
+      int a = 0;
 }
 

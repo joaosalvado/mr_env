@@ -80,6 +80,7 @@ namespace mrenv
 
         void coverRectangles();
 
+        std::list<std::shared_ptr<Rectangle>> getRectangles(){return this->best_cover_->rectangles;}
         void plotBestCover();
 
         void doubleImage();

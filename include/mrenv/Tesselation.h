@@ -7,6 +7,7 @@
 #include <iostream>
 #include <list>
 #include <queue>
+#include "yaml-cpp/yaml.h"
 
 using namespace cv;
 
@@ -45,10 +46,15 @@ namespace mrenv
     public:
         Tesselation(){};
         virtual ~Tesselation(){};
-        void inputScenario(std::string file_name)
+        void inputScenario(std::string yaml_file, double length, double width)
         {
             // Setup maps path
             addPathToScenarios();
+
+            // Read file
+            YAML::Node node = YAML::LoadFile("../../maps/" + yaml_file);
+            std::string file_name =  node["image"].as<std::string>();
+            resolution = node["resolution"].as<double>();
 
             //READ IMAGE
             std::string image_path = samples::findFile(file_name);
@@ -63,6 +69,9 @@ namespace mrenv
             }
 
             best_cover_ = nullptr;
+
+            this->length_px = (double) length / resolution; //(Length / 1000) * 10;
+            this->width_px = (double) width / resolution; //(width / 1000) * 10;
         }
         void addPathToScenarios()
         {
@@ -72,19 +81,17 @@ namespace mrenv
         void coverRectangles();
 
         void plotBestCover();
-        void setFootprint(int Lenght, int width);
 
         void doubleImage();
 
     private:
+        double resolution; // meter/pixel
         int length_px, width_px;
         std::list<Polygon> polygons;
         Mat color_img, gray_img;
         std::vector<std::vector<Point>> contours;
         std::shared_ptr<cover> best_cover_;
 
-        void addCountours();
-        void computePolyhedra(double seed_x, double seed_y);
         bool isColliding(const Point2d &left_bottom_corner, const Point2d &right_upper_corner);
         void createRectangle(
             const Point2d &center,

@@ -12,7 +12,7 @@ int main()
 
 
 
-
+        // Map files that is in the maps/ folder
         std::string map_file = "map-partial-1.yaml";
         //std::string maps_path = "../../maps/";
 

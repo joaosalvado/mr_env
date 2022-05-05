@@ -277,10 +277,10 @@ void mrenv::Tesselation::plotBestCover()
         }
         // Plot robot for scale
         auto robot = std::make_shared<Rectangle>();
-        int pos_x = this->length_px*0.5;
-        int neg_x = this->length_px*0.5;
-        int pos_y = this->width_px*0.5;
-        int neg_y = this->width_px*0.5;
+        int pos_y = this->length_px*0.5;
+        int neg_y = this->length_px*0.5;
+        int pos_x = this->width_px*0.5;
+        int neg_x = this->width_px*0.5;
         //Test Minimal Rectangle 10 x10
         this->createRectangle(Point2d(this->length_px, this->width_px), pos_x, neg_x, pos_y, neg_y, robot);
         this->fillRectangle(color_img, robot->left_bottom_corner, robot->right_upper_corner);

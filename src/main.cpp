@@ -7,7 +7,7 @@ int main()
 {
         //Parameters
         auto seed_point = Point2d(360, 230);
-        int length = 1;
+        int length = 1.5;
         int width = 1;
 
 
@@ -18,7 +18,6 @@ int main()
 
         mrenv::Tesselation tessel;
         tessel.inputScenario(map_file, length, width);
-
 
         tessel.coverRectangles();
         tessel.plotBestCover();

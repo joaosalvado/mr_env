@@ -1,29 +1,23 @@
 #include "../include/mrenv/Tesselation.h"
-#include <iostream>
-
-
 
 int main()
 {
-        //Parameters
-        auto seed_point = Point2d(360, 230);
+        // 0 - Parameters
+        // 0.1 - Footprint
         int length = 1.5;
         int width = 1;
-
-
-
-        // Map files that is in the maps/ folder
+        // 0.2 - Map files that is in the maps/ folder
         std::string map_file = "map1.yaml";
-        //std::string maps_path = "../../maps/";
 
+        // 1 - Compute the polygon tesselaiton
         mrenv::Tesselation tessel;
         tessel.inputScenario(map_file, length, width);
-
         tessel.coverRectangles();
         tessel.plotBestCover();
 
+        // 2 - Retrive a list of Rectangles
         auto rects  = tessel.getRectangles();
 
-      int a = 0;
+        return 0;
 }
 

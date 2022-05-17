@@ -316,3 +316,20 @@ void mrenv::Tesselation::doubleImage()
         imwrite("qrb4.png", result3);
         waitKey();
 }
+std::list<std::shared_ptr<mrenv::Tesselation::Rectangle>>
+mrenv::Tesselation::getRectangles_meters(){
+    std::list<std::shared_ptr<mrenv::Tesselation::Rectangle>> rects;
+    // Converting form pixel to meter
+    for(auto pxRect  : this->best_cover_->rectangles){
+        auto new_left_corner = Point2d (pxRect->left_bottom_corner.x * resolution,
+                                        pxRect->left_bottom_corner.y * resolution);
+        auto new_right_corner =  Point2d (pxRect->right_upper_corner.x * resolution,
+                                          pxRect->right_upper_corner.y * resolution);
+        auto meterRect = std::make_shared<Rectangle>();
+        meterRect->left_bottom_corner = new_left_corner;
+        meterRect->right_upper_corner = new_right_corner;
+        rects.push_back(meterRect);
+    }
+    return rects;
+}
+

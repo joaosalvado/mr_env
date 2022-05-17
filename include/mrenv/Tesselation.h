@@ -18,13 +18,15 @@ namespace mrenv
 {
     class Tesselation
     {
-        typedef std::vector<Point> Polygon;
+    public:
         typedef struct rectangle_
         {
             Point2d left_bottom_corner;
             Point2d right_upper_corner;
         } Rectangle;
-        
+    private:
+        typedef std::vector<Point> Polygon;
+
         struct compareRectangle
         {
             bool operator()(
@@ -46,13 +48,17 @@ namespace mrenv
     public:
         Tesselation(){};
         virtual ~Tesselation(){};
+
         void inputScenario(std::string yaml_file, double length, double width)
         {
             // Setup maps path
             addPathToScenarios();
 
             // Read file
-            YAML::Node node = YAML::LoadFile("../../maps/" + yaml_file);
+            YAML::Node node;
+            if(maps_path_provided){ node = YAML::LoadFile(maps_path + yaml_file);
+            }else{ node = YAML::LoadFile("../../maps/" + yaml_file);}
+
             std::string file_name =  node["image"].as<std::string>();
             resolution = node["resolution"].as<double>();
 
@@ -75,12 +81,21 @@ namespace mrenv
         }
         void addPathToScenarios()
         {
-            samples::addSamplesDataSearchPath("../../maps/");
+            if(maps_path_provided){
+                samples::addSamplesDataSearchPath(maps_path);
+            }else{
+                samples::addSamplesDataSearchPath("../../maps/");
+            }
         }
 
+        void setMapsPath(String maps_path_){
+            this->maps_path_provided = true;
+            this->maps_path = maps_path_;
+        }
         void coverRectangles();
 
         std::list<std::shared_ptr<Rectangle>> getRectangles(){return this->best_cover_->rectangles;}
+        std::list<std::shared_ptr<Rectangle>> getRectangles_meters();
         void plotBestCover();
 
         void doubleImage();
@@ -92,6 +107,8 @@ namespace mrenv
         Mat color_img, gray_img;
         std::vector<std::vector<Point>> contours;
         std::shared_ptr<cover> best_cover_;
+        bool maps_path_provided = false;
+        String maps_path;
 
         bool isColliding(const Point2d &left_bottom_corner, const Point2d &right_upper_corner);
         void createRectangle(

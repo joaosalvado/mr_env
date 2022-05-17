@@ -100,6 +100,8 @@ namespace mrenv
 
         void doubleImage();
 
+        double getPXtoM(){return resolution;}
+
     private:
         double resolution; // meter/pixel
         int length_px, width_px;

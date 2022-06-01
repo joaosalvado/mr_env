@@ -333,3 +333,22 @@ mrenv::Tesselation::getRectangles_meters(){
     return rects;
 }
 
+
+
+bool mrenv::Tesselation::generateObstacles(){
+    cv::Mat contourOutput = gray_obstacles.clone();
+    cv::findContours( contourOutput, obstacles, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE );
+
+
+
+    return true;
+}
+
+void mrenv::Tesselation::plotObstaclesContour() {
+    cv::Mat contourOutput = gray_obstacles.clone();
+    for (size_t pol = 0; pol < obstacles.size(); pol++) {
+        cv::drawContours(contourOutput, obstacles, pol, Scalar(100, 50, 30), 10);
+    }
+    cv::imshow("obstacles", contourOutput);
+    cv::waitKey();
+}

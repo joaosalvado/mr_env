@@ -67,6 +67,7 @@ namespace mrenv
 
             color_img = imread(image_path, IMREAD_COLOR);
             cvtColor(color_img, gray_img, cv::COLOR_BGR2GRAY);
+            cvtColor(color_img, gray_obstacles, cv::COLOR_BGR2GRAY);
 
             if (color_img.empty())
             {
@@ -93,10 +94,13 @@ namespace mrenv
             this->maps_path = maps_path_;
         }
         void coverRectangles();
+        bool generateObstacles();
 
         std::list<std::shared_ptr<Rectangle>> getRectangles(){return this->best_cover_->rectangles;}
+        std::vector<std::vector<cv::Point> > getObstacles(){return this->obstacles;}
         std::list<std::shared_ptr<Rectangle>> getRectangles_meters();
         void plotBestCover();
+        void plotObstaclesContour();
 
         void doubleImage();
 
@@ -107,11 +111,12 @@ namespace mrenv
         double resolution; // meter/pixel
         int length_px, width_px;
         std::list<Polygon> polygons;
-        Mat color_img, gray_img;
+        Mat color_img, gray_img, gray_obstacles;
         std::vector<std::vector<Point>> contours;
         std::shared_ptr<cover> best_cover_;
         bool maps_path_provided = false;
         String maps_path;
+        std::vector<std::vector<cv::Point> > obstacles;
 
         bool isColliding(const Point2d &left_bottom_corner, const Point2d &right_upper_corner);
         void createRectangle(
@@ -122,6 +127,7 @@ namespace mrenv
         std::shared_ptr<Rectangle> maxRectangle(int seed_x, int seed_y);
         double computeCoverArea(const cover &cov);
         static double area(const Rectangle &rect);
+
 
         //Images
         void addConvexPolygon(Mat img, const Point *points, int n_pts);

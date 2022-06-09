@@ -21,5 +21,5 @@ This project is configured as a standard CMake project, so the general build pro
 	mkdir build
 	cd build
 	cmake ..
-	make
+	make -j10
 

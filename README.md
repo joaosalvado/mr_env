@@ -4,7 +4,7 @@ Pre-install
 ===========
     
     Eigen3
-    opencv
+    OpenCV
 
 Setup/Install IRIS-Distro
 =========================
